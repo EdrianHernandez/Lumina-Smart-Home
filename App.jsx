@@ -1,12 +1,12 @@
 import React, { useState, useCallback } from 'react';
-import { Device, DeviceType, SceneType, SecurityLog } from './types';
-import DeviceGrid from './components/DeviceGrid';
-import EnergyConsumption from './components/EnergyConsumption';
-import SecurityStatus from './components/SecurityStatus';
-import QuickSceneToggle from './components/QuickSceneToggle';
+import { DeviceType, SceneType } from './types.js';
+import DeviceGrid from './components/DeviceGrid.js';
+import EnergyConsumption from './components/EnergyConsumption.js';
+import SecurityStatus from './components/SecurityStatus.js';
+import QuickSceneToggle from './components/QuickSceneToggle.js';
 import { LayoutGrid, Home, Settings, User, Menu, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const INITIAL_DEVICES: Device[] = [
+const INITIAL_DEVICES = [
   { id: '1', name: 'Living Room Lights', type: DeviceType.LIGHT, isOn: true, location: 'Living Room' },
   { id: '2', name: 'Kitchen Lights', type: DeviceType.LIGHT, isOn: false, location: 'Kitchen' },
   { id: '3', name: 'Master AC', type: DeviceType.AC, isOn: true, location: 'Master Bedroom' },
@@ -15,7 +15,7 @@ const INITIAL_DEVICES: Device[] = [
   { id: '6', name: 'Backyard Cam', type: DeviceType.CAMERA, isOn: false, location: 'Backyard' },
 ];
 
-const INITIAL_LOGS: SecurityLog[] = [
+const INITIAL_LOGS = [
   { id: '1', event: 'Front Door Locked', timestamp: '10:42 AM', type: 'info' },
   { id: '2', event: 'Motion Detected (Backyard)', timestamp: '09:15 AM', type: 'warning' },
   { id: '3', event: 'System Armed', timestamp: '08:00 AM', type: 'info' },
@@ -30,13 +30,13 @@ const NAV_ITEMS = [
   { icon: Settings, label: 'Settings', active: false },
 ];
 
-const App: React.FC = () => {
-  const [devices, setDevices] = useState<Device[]>(INITIAL_DEVICES);
-  const [activeScene, setActiveScene] = useState<SceneType>(SceneType.HOME);
+const App = () => {
+  const [devices, setDevices] = useState(INITIAL_DEVICES);
+  const [activeScene, setActiveScene] = useState(SceneType.HOME);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const toggleDevice = useCallback((id: string) => {
+  const toggleDevice = useCallback((id) => {
     setDevices(prev => prev.map(d => {
       if (d.id === id) {
         return { ...d, isOn: !d.isOn };
@@ -45,7 +45,7 @@ const App: React.FC = () => {
     }));
   }, []);
 
-  const updateDeviceValue = useCallback((id: string, value: number) => {
+  const updateDeviceValue = useCallback((id, value) => {
     setDevices(prev => prev.map(d => {
       if (d.id === id) {
         return { ...d, value };
@@ -54,16 +54,14 @@ const App: React.FC = () => {
     }));
   }, []);
 
-  const handleSceneChange = (scene: SceneType) => {
+  const handleSceneChange = (scene) => {
     setActiveScene(scene);
-    // Simulate scene effects
     let newDevices = [...devices];
     switch (scene) {
       case SceneType.AWAY:
         newDevices = newDevices.map(d => 
           d.type === DeviceType.LIGHT || d.type === DeviceType.AC ? { ...d, isOn: false } : d
         );
-        // Ensure cameras are on
         newDevices = newDevices.map(d => 
           d.type === DeviceType.CAMERA ? { ...d, isOn: true } : d
         );
@@ -82,7 +80,6 @@ const App: React.FC = () => {
          );
          break;
       case SceneType.HOME:
-        // Reset or default state
         break;
     }
     setDevices(newDevices);
@@ -90,7 +87,6 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans flex flex-col md:flex-row">
-      {/* Mobile Header */}
       <div className="md:hidden bg-white p-4 flex justify-between items-center shadow-sm sticky top-0 z-20">
         <h1 className="text-xl font-bold text-slate-800 flex items-center gap-2">
           <LayoutGrid className="w-6 h-6 text-primary" />
@@ -101,14 +97,12 @@ const App: React.FC = () => {
         </button>
       </div>
 
-      {/* Sidebar Navigation */}
       <aside className={`
         fixed inset-y-0 left-0 z-30 bg-white border-r border-slate-200 transition-all duration-300 ease-in-out
         w-64 ${isCollapsed ? 'md:w-20' : 'md:w-64'}
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         md:translate-x-0 md:relative
       `}>
-        {/* Toggle Button (Desktop) */}
         <button 
            onClick={() => setIsCollapsed(!isCollapsed)}
            className="hidden md:flex absolute -right-3 top-8 bg-white border border-slate-200 text-slate-400 hover:text-slate-600 hover:border-slate-300 rounded-full p-1.5 shadow-sm transition-colors z-50 items-center justify-center"
@@ -117,7 +111,6 @@ const App: React.FC = () => {
         </button>
 
         <div className="flex flex-col h-full py-6">
-          {/* Logo Area */}
           <div className={`flex items-center h-10 mb-8 px-6 transition-all duration-300 ${isCollapsed ? 'justify-center px-0' : ''}`}>
              <div className="text-primary flex-shrink-0 transition-transform duration-300">
                 <LayoutGrid size={28} />
@@ -130,7 +123,6 @@ const App: React.FC = () => {
              </span>
           </div>
 
-          {/* Navigation Items */}
           <nav className="flex-1 space-y-2 px-3">
              {NAV_ITEMS.map((item) => (
                 <a 
@@ -149,8 +141,6 @@ const App: React.FC = () => {
                    `}>
                       {item.label}
                    </span>
-                   
-                   {/* Tooltip for collapsed state */}
                    {isCollapsed && (
                        <div className="absolute left-full ml-3 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 shadow-sm transition-opacity delay-100">
                             {item.label}
@@ -160,7 +150,6 @@ const App: React.FC = () => {
              ))}
           </nav>
 
-          {/* User Profile */}
           <div className="mt-auto pt-4 mx-4 border-t border-slate-100">
               <div className={`flex items-center transition-all duration-300 ${isCollapsed ? 'justify-center' : 'gap-3'}`}>
                   <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-500 font-bold flex-shrink-0">
@@ -175,7 +164,6 @@ const App: React.FC = () => {
         </div>
       </aside>
 
-      {/* Main Content */}
       <main className="flex-1 p-4 md:p-8 lg:p-10 overflow-y-auto w-full">
         <header className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -183,30 +171,23 @@ const App: React.FC = () => {
             <p className="text-slate-500 mt-1">Here's what's happening at your place today.</p>
           </div>
           <div className="flex items-center gap-4">
-             {/* Date */}
              <div className="px-4 py-2 bg-white rounded-lg shadow-sm text-slate-600 text-sm font-medium border border-slate-100">
                 {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
              </div>
           </div>
         </header>
 
-        {/* Scene Toggles */}
         <section className="mb-8">
           <QuickSceneToggle activeScene={activeScene} onSceneChange={handleSceneChange} />
         </section>
 
-        {/* Dashboard Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-          
-          {/* Left Column: Device Grid (Spans 2 columns on large screens) */}
           <div className="lg:col-span-2 space-y-8">
             <DeviceGrid 
               devices={devices} 
               onToggle={toggleDevice} 
               onValueChange={updateDeviceValue} 
             />
-            
-            {/* Energy Section */}
              <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 energy-chart-container">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-bold text-slate-800">Energy Consumption</h3>
@@ -215,16 +196,12 @@ const App: React.FC = () => {
               <EnergyConsumption />
             </div>
           </div>
-
-          {/* Right Column: Security Status */}
           <div className="lg:col-span-1 space-y-6">
             <SecurityStatus logs={INITIAL_LOGS} isLocked={activeScene === SceneType.AWAY || activeScene === SceneType.SLEEP} />
           </div>
-
         </div>
       </main>
       
-      {/* Overlay for mobile sidebar */}
       {isSidebarOpen && (
         <div 
             className="fixed inset-0 bg-black/20 z-20 md:hidden glass"
