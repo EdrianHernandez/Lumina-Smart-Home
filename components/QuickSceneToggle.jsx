@@ -1,13 +1,12 @@
 import React from 'react';
-import { SceneType } from '../types';
+import { SceneType } from '../types.js';
 import { Moon, Film, LogOut, Home } from 'lucide-react';
 
-interface QuickSceneToggleProps {
-  activeScene: SceneType;
-  onSceneChange: (scene: SceneType) => void;
-}
-
-const QuickSceneToggle: React.FC<QuickSceneToggleProps> = ({ activeScene, onSceneChange }) => {
+/**
+ * QuickSceneToggle component for switching between different smart home modes.
+ * Converted from TypeScript: Removed interfaces and type annotations.
+ */
+const QuickSceneToggle = ({ activeScene, onSceneChange }) => {
   
   const scenes = [
     { id: SceneType.HOME, icon: Home, label: 'Home', color: 'bg-blue-500' },
