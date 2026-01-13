@@ -1,13 +1,11 @@
 import React from 'react';
-import { SecurityLog } from '../types';
 import { ShieldCheck, ShieldAlert, Lock, Unlock, Clock, AlertTriangle } from 'lucide-react';
 
-interface SecurityStatusProps {
-  logs: SecurityLog[];
-  isLocked: boolean;
-}
-
-const SecurityStatus: React.FC<SecurityStatusProps> = ({ logs, isLocked }) => {
+/**
+ * SecurityStatus component for displaying current alarm status and recent activity logs.
+ * Converted from TypeScript: Removed interfaces and type annotations.
+ */
+const SecurityStatus = ({ logs, isLocked }) => {
   return (
     <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 h-full flex flex-col">
       <div className="flex items-center justify-between mb-6">
