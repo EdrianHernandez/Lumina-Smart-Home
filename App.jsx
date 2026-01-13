@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { DeviceType, SceneType } from './types.jsx';
+import { DeviceType, SceneType } from './types.js';
 import DeviceGrid from './components/DeviceGrid.jsx';
 import EnergyConsumption from './components/EnergyConsumption.jsx';
 import SecurityStatus from './components/SecurityStatus.jsx';
