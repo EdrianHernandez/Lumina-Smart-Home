@@ -1,0 +1,5 @@
+{
+  "name": "Lumina Smart Home",
+  "description": "A modern, aesthetic smart home dashboard featuring device control, energy monitoring, and security status.",
+  "requestFramePermissions": []
+}
