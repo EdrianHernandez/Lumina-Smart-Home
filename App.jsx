@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
-import { DeviceType, SceneType } from './types.js';
-import DeviceGrid from './components/DeviceGrid.js';
-import EnergyConsumption from './components/EnergyConsumption.js';
-import SecurityStatus from './components/SecurityStatus.js';
-import QuickSceneToggle from './components/QuickSceneToggle.js';
+import { DeviceType, SceneType } from './types.jsx';
+import DeviceGrid from './components/DeviceGrid.jsx';
+import EnergyConsumption from './components/EnergyConsumption.jsx';
+import SecurityStatus from './components/SecurityStatus.jsx';
+import QuickSceneToggle from './components/QuickSceneToggle.jsx';
 import { LayoutGrid, Home, Settings, User, Menu, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const INITIAL_DEVICES = [
