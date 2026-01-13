@@ -1,16 +1,14 @@
 import React from 'react';
-import { Device, DeviceType } from '../types';
+import { DeviceType } from '../types';
 import { Lightbulb, Thermometer, Video, Wind, Power, Plus, Minus } from 'lucide-react';
 
-interface DeviceGridProps {
-  devices: Device[];
-  onToggle: (id: string) => void;
-  onValueChange: (id: string, value: number) => void;
-}
-
-const DeviceGrid: React.FC<DeviceGridProps> = ({ devices, onToggle, onValueChange }) => {
+/**
+ * DeviceGrid component for displaying and controlling smart home devices.
+ * Converted from TypeScript: Removed interfaces and type annotations.
+ */
+const DeviceGrid = ({ devices, onToggle, onValueChange }) => {
   
-  const getIcon = (type: DeviceType) => {
+  const getIcon = (type) => {
     switch (type) {
       case DeviceType.LIGHT: return Lightbulb;
       case DeviceType.AC: return Wind;
@@ -20,7 +18,7 @@ const DeviceGrid: React.FC<DeviceGridProps> = ({ devices, onToggle, onValueChang
     }
   };
 
-  const getGradient = (type: DeviceType, isOn: boolean) => {
+  const getGradient = (type, isOn) => {
     if (!isOn) return 'bg-white border-slate-200 text-slate-500';
     switch (type) {
       case DeviceType.LIGHT: return 'bg-amber-100 border-amber-200 text-amber-600';
