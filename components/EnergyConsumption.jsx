@@ -1,8 +1,11 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { EnergyData } from '../types';
 
-const DATA: EnergyData[] = [
+/**
+ * EnergyConsumption component for displaying weekly energy usage.
+ * Converted from TypeScript: Removed type imports and annotations.
+ */
+const DATA = [
   { day: 'Mon', kwh: 12 },
   { day: 'Tue', kwh: 19 },
   { day: 'Wed', kwh: 15 },
@@ -12,7 +15,7 @@ const DATA: EnergyData[] = [
   { day: 'Sun', kwh: 25 },
 ];
 
-const EnergyConsumption: React.FC = () => {
+const EnergyConsumption = () => {
   // Find max value to highlight it
   const maxKwh = Math.max(...DATA.map(d => d.kwh));
 
@@ -38,7 +41,7 @@ const EnergyConsumption: React.FC = () => {
                 padding: '8px 12px'
             }}
             itemStyle={{ color: '#fff' }}
-            formatter={(value: number) => [`${value} kWh`, 'Usage']}
+            formatter={(value) => [`${value} kWh`, 'Usage']}
           />
           <Bar dataKey="kwh" radius={[6, 6, 6, 6]} barSize={24}>
              {DATA.map((entry, index) => (
